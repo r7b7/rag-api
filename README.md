@@ -2,14 +2,14 @@
 
 This is a work in progress, lot of hardcoded stuff to remove.
 
-#Installation
+# Installation
 1.pip install PyPDF2
 2.pip install tf-keras
 3.pip install groq
 4.pip install adalflow
 5.pip install transformers
 
-#Run application
+# Run application
 Run the application using the below command
 
 ```uvicorn main:app --reload```
