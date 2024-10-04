@@ -1,9 +1,13 @@
 import PyPDF2
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+import torch
+from transformers import AutoTokenizer, AutoModel
 
 text_array = []
-vectorizer = TfidfVectorizer()
+model_name = "intfloat/e5-small"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModel.from_pretrained(model_name)
 
 def extract_pdf_content():
     with open("files/olympics.pdf", "rb") as file: #file read as binary data
@@ -13,19 +17,21 @@ def extract_pdf_content():
             page = reader.pages[page_num]
             text_array.append(page.extract_text())
 
-def vectorize_extracted_content():
-    tfidf_matrix = vectorizer.fit_transform(text_array)
-    return tfidf_matrix
+def get_doc_embedding(para):
+    inputs = tokenizer(para, return_tensors='pt', truncation=True, padding=True)
+    with torch.no_grad():
+        outputs = model(**inputs)
+    embedding = outputs.last_hidden_state.mean(dim=1)  
+    return embedding.squeeze().numpy()
+
 
 def fetch_similar_record(query):
-    tfidf_matrix = vectorize_extracted_content()
-    query_vector = vectorizer.transform([query])
-    similarity_scores = cosine_similarity(query_vector, tfidf_matrix)
-
-    top_doc_index = similarity_scores.argmax()
-    retrieved_doc = text_array[top_doc_index]
+    doc_embeddings = np.array([get_doc_embedding(para) for para in text_array])
+    query_embedding = get_doc_embedding(query)
+    query_embedding = query_embedding.reshape(1, -1)
+    similarities = cosine_similarity(query_embedding, doc_embeddings)
+    most_similar_index = np.argmax(similarities)
+    retrieved_doc = text_array[most_similar_index]
     return retrieved_doc
-
-
 
    
