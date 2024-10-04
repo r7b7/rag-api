@@ -19,10 +19,10 @@ def read_root():
 @app.get("/chat/gpt2")
 def get_chat_response_gpt2(query: Optional[str] = "A fact on olympics"):
     extract_pdf_content()
-    retrieved_doc = fetch_similar_record("which is the second city to host olympics 3 times? Return city name alone")    
+    retrieved_doc = fetch_similar_record(query)    
     summarized_doc = summarize_retrieved_doc(retrieved_doc)
     start_time = time.time()
-    response = generate_response_from_llm("which is the second city to host olympics 3 times? Return city name alone" + " "+ summarized_doc)
+    response = generate_response_from_llm(query + " "+ summarized_doc)
     end_time = time.time()
     print(f"Elapsed time Gpt2: {end_time - start_time} seconds")
     return response
@@ -30,10 +30,10 @@ def get_chat_response_gpt2(query: Optional[str] = "A fact on olympics"):
 @app.get("/chat")
 def get_chat_response_gpt4(query: Optional[str] = "A fact on olympics"):
     extract_pdf_content()
-    retrieved_doc = fetch_similar_record("which is the second city to host olympics 3 times? Return city name alone")    
+    retrieved_doc = fetch_similar_record(query)    
     summarized_doc = summarize_retrieved_doc(retrieved_doc)
     start_time = time.time()
-    response = generate_response("which is the second city to host olympics 3 times? Return city name alone" + " "+ summarized_doc)
+    response = generate_response(query + " "+ summarized_doc)
     end_time = time.time()
     print(f"Elapsed time Gpt4: {end_time - start_time} seconds")
     return response
@@ -45,10 +45,10 @@ def get_chat_response_adal(query: Optional[str] = "A fact on olympics"):
         model_kwargs={"model": "gemma2-9b-it"},
     )
     extract_pdf_content()
-    retrieved_doc = fetch_similar_record("which is the second city to host olympics 3 times? Return city name alone")    
+    retrieved_doc = fetch_similar_record(query)    
     summarized_doc = summarize_retrieved_doc(retrieved_doc)
     start_time = time.time()
-    response = generator("which is the second city to host olympics 3 times? Return city name alone" + " "+ summarized_doc)
+    response = generator(query + " "+ summarized_doc)
     end_time = time.time()
     print(f"Elapsed time Adal: {end_time - start_time} seconds")
     return response
