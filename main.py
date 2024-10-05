@@ -18,7 +18,6 @@ def read_root():
 
 @app.get("/chat/gpt2")
 def get_chat_response_gpt2(query: Optional[str] = "A fact on olympics"):
-    extract_pdf_content()
     retrieved_doc = fetch_similar_record(query)    
     summarized_doc = summarize_retrieved_doc(retrieved_doc)
     start_time = time.time()
@@ -29,7 +28,6 @@ def get_chat_response_gpt2(query: Optional[str] = "A fact on olympics"):
 
 @app.get("/chat")
 def get_chat_response_gpt4(query: Optional[str] = "A fact on olympics"):
-    extract_pdf_content()
     retrieved_doc = fetch_similar_record(query)    
     summarized_doc = summarize_retrieved_doc(retrieved_doc)
     start_time = time.time()
@@ -44,14 +42,18 @@ def get_chat_response_adal(query: Optional[str] = "A fact on olympics"):
         model_client=GroqAPIClient(),
         model_kwargs={"model": "gemma2-9b-it"},
     )
-    extract_pdf_content()
-    retrieved_doc = fetch_similar_record(query)    
+    retrieved_doc = fetch_similar_record(query)   
     summarized_doc = summarize_retrieved_doc(retrieved_doc)
     start_time = time.time()
     response = generator(query + " "+ summarized_doc)
     end_time = time.time()
     print(f"Elapsed time Adal: {end_time - start_time} seconds")
     return response
+
+@app.post("/chunk/doc")
+def store_doc_chunks():
+    extract_pdf_content()
+    return "success"
 
 if __name__ == "__main__":
    pass

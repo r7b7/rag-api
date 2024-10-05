@@ -1,6 +1,6 @@
 # RAG - API
 
-This is a work in progress, lot of hardcoded stuff to remove.
+This is a work in progress, Latest version is merged to main branch but older versions are accessible in appropriately named branches.
 
 # Installation
 1. pip install PyPDF2
@@ -15,4 +15,8 @@ Run the application using the below command
 
 ```uvicorn main:app --reload```
 
-Access the endpoint at http://127.0.0.1:8000/chat/adal?query=%27sample%27 
+1. Hit this API to extract pdf content
+
+``` curl -X POST http://127.0.0.1:8000/chunk/doc ```
+
+2. Access any of the GET endpoints (ex:http://127.0.0.1:8000/chat/adal?query=%27sample%27) to generate response
