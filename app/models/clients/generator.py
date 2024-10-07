@@ -4,7 +4,7 @@ from typing import Dict
 import adalflow as adal
 
 @dataclass
-class ChatOutput(adal.DataClass):
+class QueryOutput(adal.DataClass):
     response: str = field()
     __output_fields__ = ["response"] 
 
@@ -17,11 +17,11 @@ You are a helpful assistant.
 </SYS>
 User: {{input_str}}"""
 
-class ChatGenerator(adal.Component):
+class QueryGenerator(adal.Component):
     def __init__(self, model_client: adal.ModelClient, model_kwargs: Dict):
         super().__init__()
 
-        parser = adal.DataClassParser(data_class=ChatOutput, return_data_class=True)
+        parser = adal.DataClassParser(data_class=QueryOutput, return_data_class=True)
         self.generator = adal.Generator(
             model_client=model_client,
             model_kwargs=model_kwargs,
