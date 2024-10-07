@@ -20,9 +20,13 @@ Run the application using the below command
 
 # Access Endpoints
 1. Access the APIs using these endpoints 
- 1.1 Health Check - http://127.0.0.1:8000/api/v1/health/
- 1.2 Document Upload - http://127.0.0.1:8000/api/v1/documents/upload
- 1.3 Rag - http://127.0.0.1:8000/api/v1/rag/query 
+ - Health Check - http://127.0.0.1:8000/api/v1/health/
+ - Document Upload - http://127.0.0.1:8000/api/v1/documents/upload
+
+ ``` curl --location 'http://127.0.0.1:8000/api/v1/documents/upload' --form 'file=@"<add_file_path>"' ``` 
+
+ - Rag - http://127.0.0.1:8000/api/v1/rag/query 
+ ``` curl --location 'http://127.0.0.1:8000/api/v1/rag/query' --header 'Content-Type: application/json' --data '{"text":"Who won 2024 olympics"}' ```
 
 
 
