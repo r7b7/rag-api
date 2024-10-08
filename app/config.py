@@ -14,6 +14,11 @@ class Settings(BaseSettings):
     VECTOR_STORE_TYPE: str = "chroma"
     VECTOR_STORE_PATH: str = "data/vectorstore"
 
+    # Text Splitter Settings
+    SPLIT_BY: str = "sentence"
+    CHUNK_SIZE: int = 5
+    CHUNK_OVERLAP: int = 2
+
     class Config:
         env_file = ".env"
 
