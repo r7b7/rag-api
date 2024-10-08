@@ -2,11 +2,8 @@ from app.config import settings
 from app.models.clients.embedder import TransformerEmbedder
 from app.models.clients.generator import QueryGenerator
 from app.db.vector_store import VectorStore
-
 from adalflow.components.model_client import GroqAPIClient
-
 from app.models.clients.summarizer import Summarizer
-
 
 class RAGService:
     def __init__(
