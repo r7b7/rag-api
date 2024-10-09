@@ -9,9 +9,8 @@ class TestRagService(unittest.TestCase):
         mock_vector_store = MagicMock()
         mock_embedder = MagicMock()         
         mock_generator = MagicMock() 
-        mock_summarizer =    MagicMock() 
 
-        rag_service = RAGService(mock_embedder,mock_generator, mock_vector_store, mock_summarizer)
+        rag_service = RAGService(mock_embedder,mock_generator, mock_vector_store)
         rag_service.process_query("test query")
 
 if __name__ == '__main__':
