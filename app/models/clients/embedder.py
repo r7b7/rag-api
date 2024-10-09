@@ -14,7 +14,9 @@ class TransformerEmbedder():
         self.model = AutoModel.from_pretrained(self.model_name)
         
     def get_embeddings(self, text_to_embed):
-        inputs = self.tokenizer(text_to_embed, return_tensors='pt', truncation=True, padding=True)
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        inputs = self.tokenizer(text_to_embed, return_tensors='pt', padding=True).to(device)
+        self.model.to(device)
         with torch.no_grad():
             outputs = self.model(**inputs)
         embedding = outputs.last_hidden_state.mean(dim=1)  
